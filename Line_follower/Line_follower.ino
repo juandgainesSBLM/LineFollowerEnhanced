@@ -3,6 +3,12 @@
 #define TIMEOUT       2500  // waits for 2500 microseconds for sensor outputs to go low
 #define EMITTER_PIN   12    // emitter is controlled by digital pin 2
 
+#define M1 200
+#define M2 200
+
+#define KP 0.1
+#define KD 5
+
 // sensors 0 through 7 are connected to digital pins 3 through 10, respectively
 QTRSensorsRC qtrrc((unsigned char[]) {2, 4, 6, 7, 8, 9, 10, 11},
   NUM_SENSORS, TIMEOUT, EMITTER_PIN);
@@ -63,7 +69,7 @@ void loop()
   // from -1000 to +1000.  If we have sensor 0 on the left and sensor 2 on the right,  
   // a reading of -1000 means that we see the line on the left and a reading of +1000 
   // means we see the line on the right.
-  int error = position - 1000;
+  int error = position - 4000;
  
   // set the motor speed based on proportional and derivative PID terms
   // KP is the a floating-point proportional constant (maybe start with a value around 0.1)
@@ -86,8 +92,17 @@ void loop()
   // any maximum allowed value
   if (m1Speed < 0)
     m1Speed = 0;
+  else if (m1Speed>255)
+    m1Speed = 255;
+ 
   if (m2Speed < 0)
     m2Speed = 0;
+  else if (m2Speed > 255)
+    m2Speed = 255;
+    
  
   // set motor speeds using the two motor speed variables above
+  analogWrite(VelA,m1Speed);
+  analogWrite(VelB,m2Speed);
+  
 }
