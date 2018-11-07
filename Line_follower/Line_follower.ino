@@ -6,8 +6,8 @@
 #define M1 200
 #define M2 200
 
-#define KP 0.1
-#define KD 5
+#define KP 1
+#define KD 0
 
 // sensors 0 through 7 are connected to digital pins 3 through 10, respectively
 QTRSensorsRC qtrrc((unsigned char[]) {2, 4, 6, 7, 8, 9, 10, 11},
@@ -18,9 +18,9 @@ unsigned int sensorValues[NUM_SENSORS];
 int VelA = 3;
 
 // MOTOR B_RIGHT
-
-
 int VelB = 5;
+
+
 void setup() {
   // put your setup code here, to run once:
   delay(500);
@@ -69,7 +69,7 @@ void loop()
   // from -1000 to +1000.  If we have sensor 0 on the left and sensor 2 on the right,  
   // a reading of -1000 means that we see the line on the left and a reading of +1000 
   // means we see the line on the right.
-  int error = position - 4000;
+  int error = position - 3500;
  
   // set the motor speed based on proportional and derivative PID terms
   // KP is the a floating-point proportional constant (maybe start with a value around 0.1)
