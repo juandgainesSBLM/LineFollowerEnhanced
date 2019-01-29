@@ -1,3 +1,4 @@
+#include <QTRSensors.h>
 
 #define NUM_SENSORS   8     // number of sensors used
 #define TIMEOUT       2500  // waits for 2500 microseconds for sensor outputs to go low
@@ -6,8 +7,8 @@
 #define M1 200
 #define M2 200
 
-#define KP 1
-#define KD 0
+#define KP 0.1
+#define KD 5
 
 // sensors 0 through 7 are connected to digital pins 3 through 10, respectively
 QTRSensorsRC qtrrc((unsigned char[]) {2, 4, 6, 7, 8, 9, 10, 11},
@@ -62,7 +63,7 @@ void loop()
   // get calibrated sensor values returned in the sensors array, along with the line
   // position, which will range from 0 to 2000, with 1000 corresponding to the line over
   // the middle sensor
-  int position = qtr.readLine(sensorValues);
+  int position = qtrrc.readLine(sensorValues);
  
   // compute our "error" from the line position.  We will make it so that the error is zero
   // when the middle sensor is over the line, because this is our goal.  Error will range
